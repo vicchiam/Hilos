@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/item_primos"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Primos" />
+
+    <item android:id="@+id/item_primos_interface"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Primos Interface" />
+
+    <item android:id="@+id/item_primos_ocultos"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Primos Ocultos" />
+
+</menu>
