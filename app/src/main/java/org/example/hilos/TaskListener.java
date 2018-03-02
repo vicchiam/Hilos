@@ -9,6 +9,6 @@ public interface TaskListener {
     void onProgressUpdate(double progreso);
     void onPostExecute(boolean resultado);
     void onCancelled();
-    void lockScreenOrientation();
-    void unlockScreenOrientation();
+    //void lockScreenOrientation();
+    //void unlockScreenOrientation();
 }

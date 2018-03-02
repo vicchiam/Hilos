@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -26,12 +27,19 @@ public class PrimosInterface extends Fragment implements TaskListener{
 
     private EditText inputField, resultField;
     private Button primecheckbutton;
+    private ProgressBar progressBar;
+
     private MyAsyncTask mAsyncTask;
 
     @Override
     public void onAttach(Activity actividad) {
         super.onAttach(actividad);
         this.actividad = actividad;
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
@@ -51,9 +59,18 @@ public class PrimosInterface extends Fragment implements TaskListener{
             }
         });
 
+        if(mAsyncTask != null && mAsyncTask.getStatus() == AsyncTask.Status.RUNNING){
+            primecheckbutton.setText("CANCELAR");
+        }
+
+        progressBar = (ProgressBar) vista.findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
+
         return vista;
     }
 
+    /*
     @Override
     public void onPause() {
         super.onPause();
@@ -61,6 +78,14 @@ public class PrimosInterface extends Fragment implements TaskListener{
         if(mAsyncTask!=null){
             mAsyncTask.cancel(true);
         }
+    }
+    */
+
+    @Override
+    public void onDestroy() {
+        if(mAsyncTask!=null)
+            mAsyncTask.cancel(true);
+        super.onDestroy();
     }
 
     public void triggerPrimecheck(){
@@ -85,12 +110,15 @@ public class PrimosInterface extends Fragment implements TaskListener{
 
     @Override
     public void onProgressUpdate(double progress) {
-        resultField.setText(String.format("%.1f%% completado", progress*100));
+        Double d=progress*100;
+        resultField.setText(String.format("%.1f%% completed",d));
+        progressBar.setProgress(d.intValue());
     }
 
     @Override
     public void onPostExecute(boolean resultado) {
         resultField.setText(resultado + "");
+        progressBar.setProgress(progressBar.getMax());
         primecheckbutton.setText("¿ES PRIMO?");
     }
 
@@ -100,6 +128,7 @@ public class PrimosInterface extends Fragment implements TaskListener{
         primecheckbutton.setText("¿ES PRIMO?");
     }
 
+    /*
     @Override
     public void lockScreenOrientation() {
         int currentOrientation= getResources().getConfiguration().orientation;
@@ -116,5 +145,6 @@ public class PrimosInterface extends Fragment implements TaskListener{
         if(getActivity()!=null)
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
+    */
 
 }

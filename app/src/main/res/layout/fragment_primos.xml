@@ -17,6 +17,14 @@
         android:layout_height="wrap_content"
         android:inputType="number"/>
 
+    <EditText
+        android:id="@+id/inputField2"
+        android:text="3093215881333057"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:visibility="invisible"/>
+
     <Button
         android:id="@+id/primecheckbutton"
         android:text="¿Es primo?"
@@ -27,5 +35,13 @@
         android:id="@+id/resultField"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
 
 </LinearLayout>

@@ -13,4 +13,16 @@
         android:icon="@android:drawable/ic_menu_agenda"
         android:title="Primos Ocultos" />
 
+    <item android:id="@+id/item_primos_intervalo"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Primos Intervalo" />
+
+    <item android:id="@+id/item_primos_concurrente"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Primos Concurrente" />
+
+    <item android:id="@+id/item_imagenes"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Descarga IMG" />
+
 </menu>

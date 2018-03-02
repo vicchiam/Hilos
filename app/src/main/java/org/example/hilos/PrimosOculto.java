@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -23,6 +24,8 @@ public class PrimosOculto extends Fragment {
 
     private EditText inputField, resultField;
     private Button primecheckbutton;
+    private ProgressBar progressBar;
+
     private PrimosOculto.MyAsyncTask mAsyncTask;
 
     @Override
@@ -56,6 +59,10 @@ public class PrimosOculto extends Fragment {
         if(mAsyncTask != null && mAsyncTask.getStatus() == AsyncTask.Status.RUNNING){
             primecheckbutton.setText("CANCELAR");
         }
+
+        progressBar = (ProgressBar) vista.findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
 
         return vista;
     }
@@ -111,11 +118,14 @@ public class PrimosOculto extends Fragment {
         @Override
         protected void onProgressUpdate(Double... progress) {
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": onProgressUpdate()");
-            resultField.setText(String.format("%.1f%% completed",progress[0] * 100));
+            Double d=progress[0]*100;
+            resultField.setText(String.format("%.1f%% completed",d));
+            progressBar.setProgress(d.intValue());
         }
 
         @Override
         protected void onPostExecute(Boolean isPrime) {
+            progressBar.setProgress(progressBar.getMax());
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": onPostExecute()");
             resultField.setText(isPrime + "");
             primecheckbutton.setText("¿ES PRIMO?");
