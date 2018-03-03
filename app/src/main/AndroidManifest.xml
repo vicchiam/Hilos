@@ -18,6 +18,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".servicios.BoundService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".servicios.MessengerService"
+            android:process=":MessagingProcess"/>
+
+        <service
+            android:name=".servicios.Sha1HashService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".servicios.Sha1HashBroadcastService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".servicios.PrimoService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".servicios.PrimoServiceBroadcast"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
+
 
 </manifest>

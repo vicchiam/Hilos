@@ -1,4 +1,4 @@
-package org.example.hilos;
+package org.example.hilos.asynctask;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.example.hilos.R;
 
 /**
  * Created by vicch on 27/02/2018.

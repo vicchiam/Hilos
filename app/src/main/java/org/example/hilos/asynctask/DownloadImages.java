@@ -1,4 +1,4 @@
-package org.example.hilos;
+package org.example.hilos.asynctask;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,12 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.example.hilos.R;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -34,6 +34,8 @@ public class DownloadImages extends Fragment{
     private ProgressBar progressBar;
     private LinearLayout layout;
 
+    private ImageSave imageSave;
+
     @Override
     public void onAttach(Activity actividad) {
         super.onAttach(actividad);
@@ -43,6 +45,7 @@ public class DownloadImages extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        imageSave=ImageSave.getInstance();
     }
 
     @Override
@@ -60,13 +63,21 @@ public class DownloadImages extends Fragment{
 
         if(savedInstanceState==null) {
             init();
+            imageSave.clear();
+        }
+        else{
+            if(imageSave.getList().size()>0){
+                for(Bitmap b : imageSave.getList()){
+                    setBitmap(b,false);
+                }
+            }
         }
 
         return vista;
     }
 
     private void init(){
-        Log.e("INI","Iniciando Descarag Imagenes");
+        Log.e("INI","Iniciando Descarga Imagenes");
 
         String url1="https://www.bioparcvalencia.es/wp-content/uploads/2017/06/interiores-animal-bioparc-valencia-alcaravan-del-cabo-01.jpg";
         String url2="https://www.bioparcvalencia.es/wp-content/uploads/2017/06/interiores-animal-bioparc-valencia-dril-01.jpg";
@@ -74,19 +85,22 @@ public class DownloadImages extends Fragment{
         String url4="https://www.bioparcvalencia.es/wp-content/uploads/2017/06/interiores-animal-bioparc-valencia-pelicano-rosado-01-min.jpg";
 
         DownloadImageTask d1=new DownloadImageTask();
-        d1.execute(url1);
+        d1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url1);
         DownloadImageTask d2=new DownloadImageTask();
-        d2.execute(url2);
+        d2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url2);
         DownloadImageTask d3=new DownloadImageTask();
-        d3.execute(url3);
+        d3.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url3);
         DownloadImageTask d4=new DownloadImageTask();
-        d4.execute(url4);
+        d4.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,url4);
 
 
     }
 
     @Override
     public void onDestroy() {
+        if(imageSave!=null)
+            imageSave.clear();
+        imageSave=null;
         /*
         if(mAsyncTask!=null)
             mAsyncTask.cancel(true);
@@ -94,18 +108,22 @@ public class DownloadImages extends Fragment{
         super.onDestroy();
     }
 
-    public void setBitmap(Bitmap bitmap){
+    public void setBitmap(Bitmap bitmap, boolean save){
         progressBar.setProgress(progressBar.getProgress()+1);
 
 
-        ImageView imageView = new ImageView(this.getContext());
+        ImageView imageView = new ImageView(actividad);
         imageView.setImageBitmap(bitmap);
 
         layout.addView(imageView);
 
+        if(save){
+            imageSave.add(bitmap);
+        }
+
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+    private class DownloadImageTask extends AsyncTask<String, Void, Result<Bitmap>> {
 
         @Override
         protected void onPreExecute() {
@@ -113,9 +131,10 @@ public class DownloadImages extends Fragment{
         }
 
         @Override
-        protected Bitmap doInBackground(String... strings) {
+        protected Result<Bitmap> doInBackground(String... strings) {
             String url=strings[0];
 
+            Result<Bitmap> result=new Result<>();
             Bitmap bm = null;
             try {
                 URL aURL = new URL(url);
@@ -126,21 +145,33 @@ public class DownloadImages extends Fragment{
                 bm = BitmapFactory.decodeStream(bis);
                 bis.close();
                 is.close();
+                result.result=bm;
             } catch (IOException e) {
                 Log.e("Hub","Error getting the image from server : " + e.getMessage().toString());
+                result.error=e;
             }
-            return bm;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            setBitmap(bitmap);
+        protected void onPostExecute(Result<Bitmap> result) {
+            if(result.error!=null){
+                Log.e("Excepcion",Log.getStackTraceString(result.error));
+            }
+            else{
+                setBitmap(result.result,true);
+            }
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
         }
+    }
+
+    public class Result<T>{
+        public T result;
+        public Throwable error;
     }
 
 }

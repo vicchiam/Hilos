@@ -1,9 +1,7 @@
-package org.example.hilos;
+package org.example.hilos.asynctask;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,21 +13,22 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.example.hilos.R;
+
 /**
- * Created by vicch on 27/02/2018.
+ * Created by vicch on 01/03/2018.
  */
 
-public class PrimosFragment extends Fragment {
+public class PrimosOculto extends Fragment {
 
-    private static final String TAG = Fragment.class.getName();
-
+    public static final String TAG = PrimosOculto.class.getName();
     private Activity actividad;
 
     private EditText inputField, resultField;
     private Button primecheckbutton;
     private ProgressBar progressBar;
 
-    private MyAsyncTask mAsyncTask;
+    private PrimosOculto.MyAsyncTask mAsyncTask;
 
     @Override
     public void onAttach(Activity actividad) {
@@ -37,12 +36,17 @@ public class PrimosFragment extends Fragment {
         this.actividad = actividad;
     }
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflador, ViewGroup contenedor, Bundle savedInstanceState) {
         View vista = inflador.inflate(R.layout.fragment_primos, contenedor, false);
 
         TextView title = (TextView) vista.findViewById(R.id.primos_title);
-        title.setText("Primos");
+        title.setText("Primos Oculto");
 
         inputField = (EditText) vista.findViewById(R.id.inputField);
         resultField = (EditText) vista.findViewById(R.id.resultField);
@@ -54,6 +58,10 @@ public class PrimosFragment extends Fragment {
             }
         });
 
+        if(mAsyncTask != null && mAsyncTask.getStatus() == AsyncTask.Status.RUNNING){
+            primecheckbutton.setText("CANCELAR");
+        }
+
         progressBar = (ProgressBar) vista.findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         progressBar.setMax(100);
@@ -62,19 +70,17 @@ public class PrimosFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        Log.v(TAG, "Pausando test " + Thread.currentThread().getId());
-        if(mAsyncTask!=null){
+    public void onDestroy() {
+        if(mAsyncTask!=null)
             mAsyncTask.cancel(true);
-        }
+        super.onDestroy();
     }
 
     public void triggerPrimecheck(){
         if(mAsyncTask==null || mAsyncTask.getStatus() != AsyncTask.Status.RUNNING){
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": triggerPrimecheck() comienza");
             long parameter = Long.parseLong(inputField.getText().toString());
-            mAsyncTask = new MyAsyncTask();
+            mAsyncTask = new PrimosOculto.MyAsyncTask();
             mAsyncTask.execute(parameter);
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": triggerPrimecheck() termina");
         }
@@ -84,20 +90,6 @@ public class PrimosFragment extends Fragment {
         }
     }
 
-    private void lockScreenOrientation() {
-        int currentOrientation= getResources().getConfiguration().orientation;
-        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
-    }
-
-    private void unlockScreenOrientation() {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-    }
-
     private class MyAsyncTask extends AsyncTask<Long, Double, Boolean> {
 
         @Override
@@ -105,7 +97,6 @@ public class PrimosFragment extends Fragment {
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": onPreExecute()");
             resultField.setText("");
             primecheckbutton.setText("CANCELAR");
-            lockScreenOrientation();
         }
 
         @Override
@@ -136,7 +127,6 @@ public class PrimosFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Boolean isPrime) {
-            unlockScreenOrientation();
             progressBar.setProgress(progressBar.getMax());
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": onPostExecute()");
             resultField.setText(isPrime + "");
@@ -145,16 +135,10 @@ public class PrimosFragment extends Fragment {
 
         @Override
         protected void onCancelled() {
-            if(getActivity()!=null)
-                unlockScreenOrientation();
             Log.v(TAG, "Thread " + Thread.currentThread().getId() + ": onCancelled");
             super.onCancelled();
             resultField.setText("Proceso cancelado");
             primecheckbutton.setText("¿ES PRIMO?");
         }
-
-
-
     }
-
 }

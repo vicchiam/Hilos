@@ -1,9 +1,7 @@
-package org.example.hilos;
+package org.example.hilos.asynctask;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +13,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.example.hilos.R;
+
 /**
  * Created by vicch on 27/02/2018.
  */
 
-public class PrimosInterface extends Fragment implements TaskListener{
+public class PrimosInterface extends Fragment implements TaskListener {
 
     private static final String TAG = Fragment.class.getName();
 

@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/item_primos"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Primos" />
+    <item
+        android:title="AsyncTask">
 
-    <item android:id="@+id/item_primos_interface"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Primos Interface" />
+        <menu>
 
-    <item android:id="@+id/item_primos_ocultos"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Primos Ocultos" />
+            <item android:id="@+id/item_primos"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Primos" />
 
-    <item android:id="@+id/item_primos_intervalo"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Primos Intervalo" />
+            <item android:id="@+id/item_primos_interface"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Primos Interface" />
 
-    <item android:id="@+id/item_primos_concurrente"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Primos Concurrente" />
+            <item android:id="@+id/item_primos_ocultos"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Primos Ocultos" />
 
-    <item android:id="@+id/item_imagenes"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Descarga IMG" />
+            <item android:id="@+id/item_primos_intervalo"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Primos Intervalo" />
+
+            <item android:id="@+id/item_primos_concurrente"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Primos Concurrente" />
+
+            <item android:id="@+id/item_imagenes"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Descarga IMG" />
+
+        </menu>
+
+    </item>
+
+    <item
+        android:title="Servicios">
+
+        <menu>
+
+            <item android:id="@+id/item_local_enlazado"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Local Enlazado" />
+
+            <item android:id="@+id/item_mensajero"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Mensajero" />
+
+            <item android:id="@+id/item_calculadora_sha1"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Calculadora SHA1" />
+
+            <item android:id="@+id/item_calculadora_sha1_intent"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Calculadora SHA1 Intent" />
+
+            <item android:id="@+id/item_primo_service"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Servicio Primo" />
+
+            <item android:id="@+id/item_primo_service_broadcast"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Servicio Primo Intent" />
+
+        </menu>
+
+    </item>
 
 </menu>

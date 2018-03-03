@@ -1,8 +1,5 @@
-package org.example.hilos;
+package org.example.hilos.asynctask;
 
-import android.app.Fragment;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.util.Log;
 

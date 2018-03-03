@@ -2,7 +2,6 @@ package org.example.hilos;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +14,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.example.hilos.asynctask.DownloadImages;
+import org.example.hilos.asynctask.Primos;
+import org.example.hilos.asynctask.PrimosInterface;
+import org.example.hilos.asynctask.PrimosIntervalo;
+import org.example.hilos.asynctask.PrimosIntervaloConcurrente;
+import org.example.hilos.asynctask.PrimosOculto;
+import org.example.hilos.servicios.CalculadoraSHA1;
+import org.example.hilos.servicios.CalculadoraSHA1Broadcast;
+import org.example.hilos.servicios.ServicioCronometro;
+import org.example.hilos.servicios.ServicioMessenger;
+import org.example.hilos.servicios.ServicioPrimo;
+import org.example.hilos.servicios.ServicioPrimoBroadcast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -75,6 +87,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.item_imagenes) {
             this.chooseFragment(5);
         }
+        else if (id == R.id.item_local_enlazado) {
+            this.chooseFragment(6);
+        }
+        else if (id == R.id.item_mensajero) {
+            this.chooseFragment(7);
+        }
+        else if (id == R.id.item_calculadora_sha1) {
+            this.chooseFragment(8);
+        }
+        else if (id == R.id.item_primo_service) {
+            this.chooseFragment(9);
+        }
+        else if (id == R.id.item_calculadora_sha1_intent) {
+            this.chooseFragment(10);
+        }
+        else if (id == R.id.item_primo_service_broadcast) {
+            this.chooseFragment(11);
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -82,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void chooseFragment(int pos) {
         switch (pos) {
             case 0:
-                this.setFragment(new PrimosFragment());
+                this.setFragment(new Primos());
                 break;
             case 1:
                 this.setFragment(new PrimosInterface());
@@ -98,6 +128,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 5:
                 this.setFragment(new DownloadImages());
+                break;
+            case 6:
+                this.setFragment(new ServicioCronometro());
+                break;
+            case 7:
+                this.setFragment(new ServicioMessenger());
+                break;
+            case 8:
+                this.setFragment(new CalculadoraSHA1());
+                break;
+            case 9:
+                this.setFragment(new ServicioPrimo());
+                break;
+            case 10:
+                this.setFragment(new CalculadoraSHA1Broadcast());
+                break;
+            case 11:
+                this.setFragment(new ServicioPrimoBroadcast());
+                break;
             default:
                 break;
         }
