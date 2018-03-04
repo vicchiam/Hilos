@@ -27,6 +27,8 @@ import org.example.hilos.servicios.ServicioCronometro;
 import org.example.hilos.servicios.ServicioMessenger;
 import org.example.hilos.servicios.ServicioPrimo;
 import org.example.hilos.servicios.ServicioPrimoBroadcast;
+import org.example.hilos.servicios.ServicioPrimoBroadcastNotif;
+import org.example.hilos.surfaceview.BouncillBall;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -105,6 +107,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.item_primo_service_broadcast) {
             this.chooseFragment(11);
         }
+        else if (id == R.id.item_primo_service_notif) {
+            this.chooseFragment(12);
+        }
+        else if (id == R.id.item_surface_anim) {
+            this.chooseFragment(13);
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -146,6 +154,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case 11:
                 this.setFragment(new ServicioPrimoBroadcast());
+                break;
+            case 12:
+                this.setFragment(new ServicioPrimoBroadcastNotif());
+                break;
+            case 13:
+                this.setFragment(new BouncillBall());
                 break;
             default:
                 break;

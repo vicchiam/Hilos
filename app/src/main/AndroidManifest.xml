@@ -48,6 +48,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service
+            android:name=".servicios.PrimoBroadCastNotiService"
+            android:enabled="true"
+            android:exported="true" />
+
     </application>
 
 

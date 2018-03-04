@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.example.hilos.R;
@@ -25,7 +26,7 @@ import org.example.hilos.R;
  * Created by vicch on 03/03/2018.
  */
 
-public class ServicioPrimoBroadcast extends Fragment implements ResultCallback<Boolean>{
+public class ServicioPrimoBroadcast extends Fragment {
 
     PrimoServiceBroadcast mService;
     boolean mBound = false;
@@ -71,6 +72,9 @@ public class ServicioPrimoBroadcast extends Fragment implements ResultCallback<B
         TextView title = (TextView) vista.findViewById(R.id.primos_title);
         title.setText("Primos broadcast");
 
+        ProgressBar progressBar = (ProgressBar) vista.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+
         inputField = (EditText) vista.findViewById(R.id.inputField);
         inputField.setText("100069");
         resultField = (EditText) vista.findViewById(R.id.resultField);
@@ -81,7 +85,8 @@ public class ServicioPrimoBroadcast extends Fragment implements ResultCallback<B
                 if (mService != null) {
                     String num=inputField.getText().toString();
                     long l=Long.parseLong(num);
-                    mService.getPrimo(l,ServicioPrimoBroadcast.this);
+                    //mService.getPrimo(l,ServicioPrimoBroadcast.this);
+                    mService.getPrimo(l);
                 }
                 else{
                     Log.e("Primo","Servicio nulo");
@@ -92,10 +97,12 @@ public class ServicioPrimoBroadcast extends Fragment implements ResultCallback<B
         return vista;
     }
 
+    /*
     @Override
     public void onResult(Boolean data) {
         resultField.setText(data.toString());
     }
+    */
 
     @Override
     public void onStart() {

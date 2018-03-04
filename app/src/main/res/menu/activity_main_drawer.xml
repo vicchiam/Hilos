@@ -63,8 +63,24 @@
                 android:icon="@android:drawable/ic_menu_agenda"
                 android:title="Servicio Primo Intent" />
 
+            <item android:id="@+id/item_primo_service_notif"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Servicio Primo Notif" />
+
         </menu>
 
+    </item>
+
+    <item
+        android:title="SurfaceView">
+
+        <menu>
+
+            <item android:id="@+id/item_surface_anim"
+                android:icon="@android:drawable/ic_menu_agenda"
+                android:title="Animacion" />
+
+        </menu>
     </item>
 
 </menu>
